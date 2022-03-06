@@ -24,6 +24,17 @@
                     <input type="number" step="0.1" th:field="*{price}" class="form-control" required/>
                 </div>
             </div>
+            <br>
+            <div class="form-group row">
+                <label class="col-form-label col-sm-4">Category: </label>
+                <div class="col-sm-8">
+                    <select th:field="*{category}" class="form-control">
+                        <th:block th:each="cat: ${listCategories}">
+                            <option th:text="${cat.name}" th:value="${cat.id}"></option>
+                        </th:block>
+                    </select>
+                </div>
+            </div>
 
             <div class="text-center p-3">
                 <button type="submit" class="btn btn-primary">Save</button>
