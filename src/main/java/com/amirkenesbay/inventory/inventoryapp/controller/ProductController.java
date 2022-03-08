@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class ProductController {
     private CategoryRepository categoryRepository;
 
     @GetMapping("/products/new")
-    public String showNewProductForm(Model model){
+    public String showNewProductForm(Model model) {
         List<Category> listCategories = categoryRepository.findAll();
         model.addAttribute("product", new Product());
         model.addAttribute("listCategories", listCategories);
@@ -30,22 +31,33 @@ public class ProductController {
     }
 
     @PostMapping("/products/save")
-    public String saveProduct(Product product){
+    public String saveProduct(Product product, RedirectAttributes redirectAttributes) {
         productRepository.save(product);
+        redirectAttributes.addFlashAttribute("message", "The product has been saved successfully");
         return "redirect:/products";
     }
 
     @GetMapping("/products")
-    public String listProducts(Model model){
+    public String listProducts(Model model) {
         List<Product> productList = productRepository.findAll();
         model.addAttribute("productList", productList);
         return "products";
     }
 
     @GetMapping("/products/edit/{id}")
-    public String showEditProductForm(@PathVariable("id") Integer id, Model model){
+    public String showEditProductForm(@PathVariable("id") Integer id, Model model) {
         Product product = productRepository.findById(id).get();
         model.addAttribute("product", product);
+
+        List<Category> listCategories = categoryRepository.findAll();
+        model.addAttribute("listCategories", listCategories);
         return "product_form";
+    }
+
+    @GetMapping("products/delete/{id}")
+    public String deleteProduct(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+        productRepository.deleteById(id);
+        redirectAttributes.addFlashAttribute("message", "The product ID " + id + " has been deleted");
+        return "redirect:/products";
     }
 }
