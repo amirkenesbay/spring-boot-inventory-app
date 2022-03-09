@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Brand</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container text-center">
+    <div th:if="${brand.id == null}"><h1>Create New Brand</h1></div>
+    <div th:unless="${brand.id == null}"><h1>Edit Brand</h1></div>
+    <form th:action="@{/brands/save}" th:object="${brand}" method="post"
+          style="max-width: 600px; margin: 0 auto;">
+        <input type="hidden" th:field="*{id}" th:value="${brand.id}">
+        <div class="m-3">
+            <div class="form-group row">
+                <label class="col-form-label col-sm-4">Brand Name: </label>
+                <div class="col-sm-8">
+                    <input type="text" th:field="*{name}" class="form-control" required/>
+                </div>
+            </div>
+            <br>
+            <div class="form-group row">
+                <label class="col-form-label col-sm-4">Choose one or more categories: </label>
+                <div class="col-sm-8">
+                    <select th:field = "*{categories}" class="form-control" multiple="multiple" required>
+                        <th:block th:each="cat: ${listCategories}">
+                            <option th:text="${cat.name}" th:value="${cat.id}"></option>
+                        </th:block>
+                    </select>>
+                </div>
+            </div>
+            <div class="text-center p-3">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

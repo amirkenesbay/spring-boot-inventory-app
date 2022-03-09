@@ -60,4 +60,5 @@ public class ProductController {
         redirectAttributes.addFlashAttribute("message", "The product ID " + id + " has been deleted");
         return "redirect:/products";
     }
+
 }
