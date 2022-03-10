@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List Brands</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container text-center">
+    <div><h1>Brand List</h1></div>
+    <!--/*@thymesVar id="message" type="message"*/-->
+    <div th:if="${message}" class="alert alert-success text-center">
+        [[${message}]]
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Categories</th>
+                    <th>Configuration</th>
+                </tr>
+            </thead>
+            <tbody>
+                <th:block th:each = "brand: ${listBrands}">
+                    <tr>
+                        <td>[[${brand.id}]]</td>
+                        <td>[[${brand.name}]]</td>
+                        <td>[[${brand.categories}]]</td>
+                        <td>
+                            <a th:href="@{'/brands/edit/' + ${brand.id}}">Edit</a>
+                            &nbsp;
+                            <a th:href="@{'/brands/delete/' + ${brand.id}}">Delete</a>
+                        </td>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
