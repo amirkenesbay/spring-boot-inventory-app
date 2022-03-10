@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -31,7 +32,12 @@ public class ProductController {
     }
 
     @PostMapping("/products/save")
-    public String saveProduct(Product product, RedirectAttributes redirectAttributes) {
+    public String saveProduct(Product product, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+        String[] detailNames = request.getParameterValues("detailName");
+        String[] detailValues = request.getParameterValues("detailValue");
+        for (int i = 0; i < detailNames.length; i++) {
+            product.addDetail(detailNames[i], detailValues[i]);
+        }
         productRepository.save(product);
         redirectAttributes.addFlashAttribute("message", "The product has been saved successfully");
         return "redirect:/products";
@@ -60,5 +66,4 @@ public class ProductController {
         redirectAttributes.addFlashAttribute("message", "The product ID " + id + " has been deleted");
         return "redirect:/products";
     }
-
 }
