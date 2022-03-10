@@ -38,6 +38,21 @@
                 </div>
             </div>
             <br>
+
+            <th:block th:unless="${product.id == null}" th:each="detail: ${product.details}">
+                <input type="hidden" name="detailID" th:value="${detail.id}"/>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-4">Details #[[${status.count}]]: </label>
+                    <div class="col-sm-4">
+                        <input type="text" name="detailName" th:value="${detail.name}" class="form-control" required/>
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" name="detailValue" th:value="${detail.value}" class="form-control" required/>
+                    </div>
+                </div>
+            </th:block>
+
+            <th:block if="${product.id == null}">
             <div class="form-group row">
                 <label class="col-form-label col-sm-4">Details #1: </label>
                 <div class="col-sm-4">
@@ -67,7 +82,7 @@
                     <input type="text" name="detailValue" placeholder="Value" class="form-control" required/>
                 </div>
             </div>
-
+            </th:block>
             <div class="text-center p-3">
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>

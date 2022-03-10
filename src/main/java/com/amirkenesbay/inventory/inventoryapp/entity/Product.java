@@ -65,4 +65,10 @@ public class Product {
     public void addDetail(String name, String value){
         this.details.add(new ProductDetails(name, value, this));
     }
+
+    public void setDetail(Integer id, String name, String value){
+        this.details.add(new ProductDetails(id, name, value , this));
+    }
+
+
 }

@@ -33,6 +33,7 @@
                         <td>[[${product.category.name}]]</td>
                         <td>[[${product.details}]]</td>
                         <td>
+                            <!--/*@thymesVar id="id" type="id"*/-->
                             <a th:href="@{'/products/edit/' + ${product.id}}">Edit</a>
                             &nbsp;
                             <a th:href="@{'/products/delete/' + ${product.id}}">Delete</a>
