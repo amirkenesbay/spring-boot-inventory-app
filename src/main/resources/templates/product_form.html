@@ -39,7 +39,7 @@
             </div>
             <br>
 
-            <th:block th:unless="${product.id == null}" th:each="detail: ${product.details}">
+            <th:block th:unless="${product.id == null}" th:each="detail, status: ${product.details}">
                 <input type="hidden" name="detailID" th:value="${detail.id}"/>
                 <div class="form-group row">
                     <label class="col-form-label col-sm-4">Details #[[${status.count}]]: </label>
@@ -50,9 +50,10 @@
                         <input type="text" name="detailValue" th:value="${detail.value}" class="form-control" required/>
                     </div>
                 </div>
+                <br>
             </th:block>
 
-            <th:block if="${product.id == null}">
+            <th:block th:if="${product.id == null}">
             <div class="form-group row">
                 <label class="col-form-label col-sm-4">Details #1: </label>
                 <div class="col-sm-4">
