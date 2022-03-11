@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,5 +51,12 @@ public class BrandController {
         model.addAttribute("listCategories", listCategories);
         model.addAttribute("brand", brand);
         return "brand_form";
+    }
+
+    @GetMapping("brands/delete/{id}")
+    public String deleteBrand(@PathVariable("id") Integer id, Model model , RedirectAttributes redirectAttributes){
+        brandRepository.deleteById(id);
+        redirectAttributes.addFlashAttribute("message", "The Brand ID " + id + " has been deleted");
+        return "redirect:/brands";
     }
 }
